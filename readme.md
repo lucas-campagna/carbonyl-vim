@@ -17,6 +17,8 @@ O —— Cr —— O
 
 Carbonyl is a Chromium based browser built to run in a terminal. [Read the blog post](https://fathy.fr/carbonyl).
 
+> This is the [`carbonyl-vim`](https://github.com/lucas-campagna/carbonyl-vim) fork, which ships a built-in vimium-style keyboard navigation layer enabled by default. See [Keyboard navigation](#keyboard-navigation-vimium-style) below.
+
 It supports pretty much all Web APIs including WebGL, WebGPU, audio and video playback, animations, etc..
 
 It's snappy, starts in less than a second, runs at 60 FPS, and idles at 0% CPU usage. It does not require a window server (i.e. works in a safe-mode console), and even runs through SSH.
@@ -46,6 +48,10 @@ $ carbonyl https://github.com
 - [macOS arm64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.macos-arm64.zip)
 - [Linux amd64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.linux-amd64.zip)
 - [Linux arm64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.linux-arm64.zip)
+
+> This fork's CI publishes `libcarbonyl` builds for each release under
+> [Releases](https://github.com/lucas-campagna/carbonyl-vim/releases). Drop the
+> matching library into an upstream binary to use the vimium navigation layer.
 
 ## Demo
 

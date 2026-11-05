@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-INSTALL_DIR="${CARBONYL_INSTALL_DIR:-$HOME/Downloads/carbonyl-0.0.3}"
+INSTALL_DIR="${CARBONYL_INSTALL_DIR:-$HOME/Downloads/carbonyl-0.0.4}"
 
 if [ ! -f "$INSTALL_DIR/libcarbonyl.dylib" ]; then
     echo "libcarbonyl.dylib not found at $INSTALL_DIR"

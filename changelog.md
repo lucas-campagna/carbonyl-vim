@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2026-11-05
+
+### 🚀 Features
+
+- Add built-in vimium-style keyboard navigation (`h/j/k/l` scroll, `f` link hints, `/` find, `gg`/`G`, `H`/`L` history), enabled by default
+- Add `--no-vim` flag and `CARBONYL_ENV_NO_VIM` env var to disable vimium navigation
+
 ## [0.0.3] - 2023-02-18
 
 ### 🚀 Features
