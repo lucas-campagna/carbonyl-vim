@@ -44,14 +44,15 @@ $ carbonyl https://github.com
 
 ### Binaries
 
+- [Linux amd64 (this fork, v0.0.4, with vimium navigation)](https://github.com/lucas-campagna/carbonyl-vim/releases/download/v0.0.4/carbonyl.linux-amd64.zip)
 - [macOS amd64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.macos-amd64.zip)
 - [macOS arm64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.macos-arm64.zip)
-- [Linux amd64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.linux-amd64.zip)
 - [Linux arm64](https://github.com/fathyb/carbonyl/releases/download/v0.0.3/carbonyl.linux-arm64.zip)
 
-> This fork's CI publishes `libcarbonyl` builds for each release under
-> [Releases](https://github.com/lucas-campagna/carbonyl-vim/releases). Drop the
-> matching library into an upstream binary to use the vimium navigation layer.
+> The Linux amd64 build above is packaged by this fork's CI with the new core
+> library. For other platforms, download the upstream binary and replace its
+> `libcarbonyl` with the matching build from this fork's
+> [Releases](https://github.com/lucas-campagna/carbonyl-vim/releases).
 
 ## Demo
 

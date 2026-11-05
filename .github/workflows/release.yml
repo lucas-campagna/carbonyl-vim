@@ -13,43 +13,41 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build libcarbonyl (${{ matrix.target }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            lib: libcarbonyl.so
-          - os: macos-15-intel
-            target: x86_64-apple-darwin
-            lib: libcarbonyl.dylib
-          - os: macos-15-intel
-            target: aarch64-apple-darwin
-            lib: libcarbonyl.dylib
-
+  linux:
+    name: Build Linux CLI (x86_64)
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.target }}
+          targets: x86_64-unknown-linux-gnu
 
-      - name: Build
-        run: cargo build --release --target ${{ matrix.target }}
+      - name: Build core library
+        run: cargo build --release --target x86_64-unknown-linux-gnu
 
-      - name: Package
+      - name: Fetch prebuilt Chromium runtime
+        run: ./scripts/runtime-pull.sh amd64
+
+      - name: Swap in the new core library
         run: |
-          mkdir -p dist
-          cp "build/${{ matrix.target }}/release/${{ matrix.lib }}" dist/
-          cd dist
-          zip -r "../libcarbonyl-${{ matrix.target }}.zip" .
+          strip build/x86_64-unknown-linux-gnu/release/libcarbonyl.so
+          cp build/x86_64-unknown-linux-gnu/release/libcarbonyl.so \
+            build/pre-built/x86_64-unknown-linux-gnu/libcarbonyl.so
+
+      - name: Package CLI and core library
+        run: |
+          VERSION="$(python3 -c "import json;print(json.load(open('package.json'))['version'])")"
+          mkdir -p build/zip
+          cp -r build/pre-built/x86_64-unknown-linux-gnu "build/zip/carbonyl-$VERSION"
+          cd build/zip
+          python3 -m zipfile -c ../carbonyl.linux-amd64.zip "carbonyl-$VERSION"
+          cd "$GITHUB_WORKSPACE/build/x86_64-unknown-linux-gnu/release"
+          python3 -m zipfile -c "$GITHUB_WORKSPACE/build/libcarbonyl-x86_64-unknown-linux-gnu.zip" libcarbonyl.so
 
       - name: Upload to release
         if: github.event_name == 'release' || inputs.tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.release.tag_name || inputs.tag }}
-        run: gh release upload "$TAG" "libcarbonyl-${{ matrix.target }}.zip" --clobber
+        run: gh release upload "$TAG" build/carbonyl.linux-amd64.zip build/libcarbonyl-x86_64-unknown-linux-gnu.zip --clobber
